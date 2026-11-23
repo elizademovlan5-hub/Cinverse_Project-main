@@ -17,9 +17,9 @@ public class AuthController(AppDbContext db, IConfiguration config) : Controller
     public IActionResult Register(RegisterDto dto)
     {
         if (string.IsNullOrWhiteSpace(dto.Name) || !dto.Email.Contains('@') || dto.Password.Length < 6)
-            return BadRequest(new { message = "Ad, duzgun email ve minimum 6 simvolluq sifre daxil edinn." });
+            return BadRequest(new { message = "Ad, düzgün email və minimum 6 simvolluq şifrə daxil edin." });
         var email = dto.Email.Trim().ToLower();
-        if (db.Users.Any(x => x.Email == email)) return Conflict(new { message = "Bu email artiq qeydiyyatdan kecib." });
+        if (db.Users.Any(x => x.Email == email)) return Conflict(new { message = "Bu email artıq qeydiyyatdan keçib." });
 
         var user = new User { Name = dto.Name.Trim(), Email = email, PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password) };
         db.Users.Add(user);
